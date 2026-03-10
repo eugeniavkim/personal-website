@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Eugenia Kim — AI Safety & Security Researcher at Microsoft. Red teaming, psychosocial harms, alignment research, and Sparky's Field Notes.">
+<meta name="keywords" content="AI safety, alignment, red teaming, psychosocial harms, AI security, Eugenia Kim, Microsoft, PyRIT">
+<meta name="author" content="Eugenia Kim">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Eugenia Kim — AI Safety & Security Researcher">
+<meta property="og:description" content="Research, writing, and a golden retriever's threat model.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eugenia.kim">
+<meta property="og:image" content="https://eugenia.kim/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eugenia Kim — AI Safety & Security Researcher">
+<meta name="twitter:description" content="Research, writing, and a golden retriever's threat model.">
+<title>Eugenia Kim — AI Safety & Security Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --text: #37352f;
+  --text-secondary: #787774;
+  --text-light: #9b9a97;
+  --bg: #ffffff;
+  --bg-hover: #f7f6f3;
+  --bg-subtle: #fbfbfa;
+  --border: #e9e9e7;
+  --border-light: #f1f1ef;
+  --gold: #c4820e;
+  --gold-bg: #fdecc8;
+  --gold-text: #93590d;
+  --red-bg: #ffe2dd;
+  --red-text: #93291a;
+  --green-bg: #dbeddb;
+  --green-text: #2b593f;
+  --blue-bg: #d3e5ef;
+  --blue-text: #28456c;
+  --purple-bg: #e8deee;
+  --purple-text: #6940a5;
+  --gray-bg: #eee;
+  --gray-text: #5a5a58;
+  --max-w: 720px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(55, 53, 47, 0.08); }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+nav.scrolled { border-bottom-color: var(--border); }
+
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: all 0.12s;
+}
+
+.nav-links a:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+}
+
+.mobile-toggle:hover { background: var(--bg-hover); }
+
+.mobile-toggle span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--text);
+  margin: 3.5px 0;
+}
+
+/* ── HERO ── */
+.hero {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 8rem 1.5rem 4rem;
+}
+
+.hero-p {
+  font-size: 1.0625rem;
+  color: var(--text);
+  line-height: 1.85;
+  max-width: 580px;
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.1s forwards;
+}
+
+.hero-p a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s;
+}
+
+.hero-p a:hover { text-decoration-color: var(--text); }
+
+.hero-detail {
+  font-size: 0.8125rem;
+  color: var(--text-light);
+  margin-bottom: 1.75rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.25s forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.35s forwards;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.12s;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.btn-fill { background: var(--text); color: var(--bg); }
+.btn-fill:hover { opacity: 0.85; }
+.btn-ghost { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--bg-hover); }
+
+/* ── SECTIONS ── */
+section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.s-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.s-icon { font-size: 1.125rem; flex-shrink: 0; }
+
+.s-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.divider {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.divider hr {
+  border: none;
+  height: 1px;
+  background: var(--border-light);
+}
+
+/* ── PUBLICATIONS ── */
+.pub {
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--border-light);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.pub:last-child { border-bottom: none; }
+
+.pub-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 0.15rem;
+}
+
+.pub-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.1s;
+}
+
+.pub-title a:hover { opacity: 0.6; }
+
+.pub-authors {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.pub-authors strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.pub-venue {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-hover);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  align-self: start;
+  margin-top: 0.15rem;
+}
+
+.pub-status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--gold-text);
+  background: var(--gold-bg);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  align-self: start;
+  margin-top: 0.15rem;
+}
+
+/* ── FIELD NOTES ── */
+.fn-intro {
+  display: flex;
+  gap: 0.875rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 1.125rem;
+  background: #fef9ee;
+  border-radius: 8px;
+}
+
+.sparky-pic {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gold-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.fn-intro-text {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.fn-intro-text strong { color: var(--text); }
+
+.note {
+  display: block;
+  padding: 1.125rem 0;
+  border-bottom: 1px solid var(--border-light);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.1s;
+}
+
+.note:last-child { border-bottom: none; }
+.note:hover { opacity: 0.75; }
+
+.note-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.note-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  color: var(--text-light);
+}
+
+.note-tag {
+  font-size: 0.625rem;
+  font-weight: 500;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.t-sparky { background: var(--gold-bg); color: var(--gold-text); }
+.t-weight { background: var(--red-bg); color: var(--red-text); }
+.t-human { background: var(--green-bg); color: var(--green-text); }
+.t-bridges { background: var(--blue-bg); color: var(--blue-text); }
+.t-psych { background: var(--purple-bg); color: var(--purple-text); }
+.t-open { background: var(--gray-bg); color: var(--gray-text); }
+.t-life { background: var(--purple-bg); color: var(--purple-text); }
+.t-work { background: var(--blue-bg); color: var(--blue-text); }
+.t-bysparky { background: var(--gold-bg); color: var(--gold-text); }
+
+.note h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.005em;
+}
+
+.note-sparky {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.6;
+  padding-left: 0.875rem;
+  border-left: 2px solid var(--gold-bg);
+  margin-top: 0.5rem;
+}
+
+.note-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-top: 0.375rem;
+}
+
+/* ── THREAT MODEL ── */
+.threat-box {
+  margin-top: 2.25rem;
+  background: #fef9ee;
+  border-radius: 8px;
+  padding: 1.75rem;
+}
+
+.threat-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.threat-top h3 { font-size: 0.9375rem; font-weight: 600; }
+
+.q-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--gold-bg);
+  color: var(--gold-text);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+}
+
+.threat-top p { font-size: 0.75rem; color: var(--text-light); }
+
+.threat-quotes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.tq {
+  background: rgba(255,255,255,0.75);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.tq-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin-bottom: 0.4rem;
+}
+
+.tq p {
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.tq .tq-attr {
+  font-style: normal;
+  font-size: 0.6875rem;
+  color: var(--text-light);
+  margin-top: 0.4rem;
+}
+
+.threat-items {
+  background: rgba(255,255,255,0.75);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.threat-items h4 {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin-bottom: 0.75rem;
+}
+
+.ti {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(196, 130, 14, 0.08);
+}
+
+.ti:last-child { border-bottom: none; }
+
+.sev {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5625rem;
+  font-weight: 500;
+  padding: 0.125rem 0.35rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  width: 4.25rem;
+  text-align: center;
+}
+
+.sev-c { background: var(--red-bg); color: var(--red-text); }
+.sev-h { background: var(--gold-bg); color: var(--gold-text); }
+.sev-m { background: var(--green-bg); color: var(--green-text); }
+
+.ti p { font-size: 0.8125rem; line-height: 1.55; color: var(--text); }
+
+/* ── TALKS ── */
+.talk {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-light);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.15rem;
+}
+
+.talk:last-child { border-bottom: none; }
+
+.talk-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.talk-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.1s;
+}
+
+.talk-title a:hover { opacity: 0.6; }
+
+.talk-detail {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.talk-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.15rem;
+}
+
+.talk-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  color: var(--text-light);
+}
+
+.talk-type {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5625rem;
+  color: var(--text-secondary);
+  background: var(--bg-hover);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── CV ── */
+.cv-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2.5rem;
+}
+
+.cv-side {
+  position: sticky;
+  top: 4.5rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cv-item {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.cv-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.cv-dates {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  color: var(--text-light);
+  margin-bottom: 0.2rem;
+}
+
+.cv-item h3 { font-size: 0.875rem; font-weight: 600; }
+
+.cv-item h4 {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.cv-item p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── CONTACT ── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.contact-card {
+  padding: 1.5rem;
+  background: var(--bg-subtle);
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+}
+
+.contact-card h3 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem; }
+
+.contact-card p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.socials { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+
+.sc {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.12s;
+}
+
+.sc:hover { border-color: var(--text); color: var(--text); background: var(--bg-hover); }
+
+/* ── FOOTER ── */
+footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.6875rem;
+  color: var(--text-light);
+}
+
+.ft-sparky { color: var(--gold); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .nav-inner { padding: 0.625rem 1rem; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: var(--bg);
+    flex-direction: column;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .nav-links.open { display: flex; }
+  .mobile-toggle { display: block; }
+
+  .hero { padding: 6rem 1rem 3rem; }
+  section { padding: 2.5rem 1rem; }
+  .divider { padding: 0 1rem; }
+
+  .pub { grid-template-columns: 1fr; gap: 0.25rem; }
+  .pub-venue, .pub-status { justify-self: start; }
+
+  .threat-quotes { grid-template-columns: 1fr; }
+
+  .cv-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .cv-side { position: static; flex-direction: row; }
+
+  .contact-grid { grid-template-columns: 1fr; }
+  .threat-box { padding: 1.25rem; }
+
+  footer {
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Eugenia Kim",
+  "jobTitle": "AI Safety & Security Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Microsoft"
+  },
+  "url": "https://eugenia.kim",
+  "sameAs": [
+    "https://linkedin.com/in/YOUR-LINKEDIN",
+    "https://github.com/YOUR-GITHUB",
+    "https://scholar.google.com/citations?user=YOUR-SCHOLAR-ID"
+  ],
+  "knowsAbout": ["AI Safety", "Red Teaming", "Adversarial ML", "Psychosocial Harms", "Alignment"],
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Georgia Institute of Technology"
+  }
+}
+</script>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-name">Eugenia Kim</a>
+    <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#publications">Research</a></li>
+      <li><a href="#field-notes">Unfinished Thoughts</a></li>
+      <li><a href="#talks">Talks</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-p">
+    I needed a place to share my thoughts. What I'm thinking about now,
+    what I thought about in the past, and what we could think about together.
+  </p>
+  <p class="hero-p">
+    I study AI safety and security at <a href="#">Microsoft</a> on the AI Red Team,
+    leading research in sociotechnical red teaming and I enjoy building the
+    tools we use to do it.
+  </p>
+  <p class="hero-p" style="margin-bottom: 2rem;">
+    Also, you should meet my dog, Sparky. He walks around looking like he's
+    about to have a thought but never quite finishes it. This might be a good
+    place for those thoughts too.
+  </p>
+  <p class="hero-detail">
+    Eugenia Kim · AI Safety & Security Researcher
+  </p>
+  <div class="hero-actions">
+    <a href="#publications" class="btn btn-fill">Research</a>
+    <a href="#field-notes" class="btn btn-ghost">Unfinished Thoughts</a>
+  </div>
+</header>
+
+<!-- PUBLICATIONS -->
+<div class="divider"><hr></div>
+<section id="publications" class="reveal">
+  <div class="s-head">
+    <span class="s-icon">📄</span>
+    <h2 class="s-title">Research & Publications</h2>
+  </div>
+
+  <div class="pub">
+    <div>
+      <div class="pub-title"><a href="#">Seeking Late Night Life Lines: Experiences of Conversational AI Use in Mental Health Crisis</a></div>
+      <div class="pub-authors"><strong>Eugenia Kim</strong> et al.</div>
+    </div>
+    <span class="pub-status">Under Review</span>
+  </div>
+
+  <div class="pub">
+    <div>
+      <div class="pub-title"><a href="#">Expert Evaluation and the Limits of Human Feedback in Mental Health AI Safety Testing</a></div>
+      <div class="pub-authors"><strong>Eugenia Kim</strong> et al.</div>
+    </div>
+    <span class="pub-status">Under Review</span>
+  </div>
+
+  <div class="pub">
+    <div>
+      <div class="pub-title"><a href="#">A Representation Engineering Perspective on the Effectiveness of Multi-Turn Jailbreaks</a></div>
+      <div class="pub-authors"><strong>Eugenia Kim</strong> et al.</div>
+    </div>
+    <span class="pub-venue">ICML DIG-BUGS '25</span>
+  </div>
+
+  <div class="pub">
+    <div>
+      <div class="pub-title"><a href="#">Lessons from Red Teaming 100 Generative AI Products</a></div>
+      <div class="pub-authors"><strong>Eugenia Kim</strong> et al.</div>
+    </div>
+    <span class="pub-venue">NeurIPS RedTeamGenAI '24</span>
+  </div>
+
+  <div class="pub">
+    <div>
+      <div class="pub-title"><a href="#">Age Bias in Emotion Detection</a></div>
+      <div class="pub-authors"><strong>Eugenia Kim</strong> (first author)</div>
+    </div>
+    <span class="pub-venue">AIES '21</span>
+  </div>
+
+  <div class="pub">
+    <div>
+      <div class="pub-title"><a href="#">Framing of Suicide Circumstances by Gender</a></div>
+      <div class="pub-authors"><strong>Eugenia Kim</strong> et al.</div>
+    </div>
+    <span class="pub-venue">JMIR Mental Health</span>
+  </div>
+
+  <div class="pub">
+    <div>
+      <div class="pub-title"><a href="#">Liquid Crystalline Poly(3-hexylthiophene) Solutions Revisited</a></div>
+      <div class="pub-authors"><strong>Eugenia Kim</strong> et al.</div>
+    </div>
+    <span class="pub-venue">Chemistry of Materials</span>
+  </div>
+</section>
+
+<!-- EUGENIA'S UNFINISHED THOUGHTS -->
+<!--
+  TAG REFERENCE (copy-paste when adding new posts):
+  <span class="note-tag t-human">Staying Human</span>              — green
+  <span class="note-tag t-life">Real Life</span>                    — purple
+  <span class="note-tag t-bridges">Interdisciplinary Bridges</span> — blue
+  <span class="note-tag t-open">Open Questions</span>               — gray
+  <span class="note-tag t-work">Sparky Nap Time</span>              — blue
+  <span class="note-tag t-bysparky">By Sparky</span>                — gold
+-->
+<div class="divider"><hr></div>
+<section id="field-notes" class="reveal">
+  <div class="s-head">
+    <span class="s-icon">✏️</span>
+    <h2 class="s-title">Eugenia's Unfinished Thoughts</h2>
+  </div>
+
+  <div class="fn-intro">
+    <div class="sparky-pic">🐕</div>
+    <div class="fn-intro-text">
+      <strong>Sparky provides a brief summary at the top of each post.</strong>
+      His interpretations are his own.
+    </div>
+  </div>
+
+  <!-- POSTS — comment out any you haven't written yet
+
+  TAG REFERENCE:
+  <span class="note-tag t-human">Staying Human</span>              — green
+  <span class="note-tag t-life">Real Life</span>                    — purple
+  <span class="note-tag t-bridges">Interdisciplinary Bridges</span> — blue
+  <span class="note-tag t-open">Open Questions</span>               — gray
+  <span class="note-tag t-work">Sparky Nap Time</span>              — blue
+  <span class="note-tag t-bysparky">By Sparky</span>                — gold
+  -->
+
+  <a href="#" class="note">
+    <div class="note-meta">
+      <span class="note-date">Sep 2026</span>
+      <span class="note-tag t-bysparky">By Sparky</span>
+    </div>
+    <h3>A Golden Retriever's Guide to AI Security</h3>
+    <div class="note-sparky">
+      "SPARKY TLDR HERE"
+    </div>
+    <div class="note-desc">
+      POST DESCRIPTION HERE
+    </div>
+  </a>
+
+  <a href="#" class="note">
+    <div class="note-meta">
+      <span class="note-date">Aug 2026</span>
+      <span class="note-tag t-life">Real Life</span>
+    </div>
+    <h3>The Reality of Wanting a Family in a Field That Never Sleeps</h3>
+    <div class="note-sparky">
+      "SPARKY TLDR HERE"
+    </div>
+    <div class="note-desc">
+      POST DESCRIPTION HERE
+    </div>
+  </a>
+
+  <a href="#" class="note">
+    <div class="note-meta">
+      <span class="note-date">Jul 2026</span>
+      <span class="note-tag t-human">Staying Human</span>
+    </div>
+    <h3>People Who Ask AI to Confirm Its Role in Their Life</h3>
+    <div class="note-sparky">
+      "SPARKY TLDR HERE"
+    </div>
+    <div class="note-desc">
+      POST DESCRIPTION HERE
+    </div>
+  </a>
+
+  <a href="#" class="note">
+    <div class="note-meta">
+      <span class="note-date">Jun 2026</span>
+      <span class="note-tag t-bridges">Interdisciplinary Bridges</span>
+    </div>
+    <h3>What I Learned Reading Aviation Incident Reports for a Month</h3>
+    <div class="note-sparky">
+      "SPARKY TLDR HERE"
+    </div>
+    <div class="note-desc">
+      POST DESCRIPTION HERE
+    </div>
+  </a>
+
+  <a href="#" class="note">
+    <div class="note-meta">
+      <span class="note-date">May 2026</span>
+      <span class="note-tag t-open">Open Questions</span>
+    </div>
+    <h3>What Happens When We Stop Thinking for Ourselves</h3>
+    <div class="note-sparky">
+      "SPARKY TLDR HERE"
+    </div>
+    <div class="note-desc">
+      POST DESCRIPTION HERE
+    </div>
+  </a>
+
+  <a href="#" class="note">
+    <div class="note-meta">
+      <span class="note-date">Apr 2026</span>
+      <span class="note-tag t-human">Staying Human</span>
+    </div>
+    <h3>Everyone Talks Like ChatGPT Now</h3>
+    <div class="note-sparky">
+      "SPARKY TLDR HERE"
+    </div>
+    <div class="note-desc">
+      POST DESCRIPTION HERE
+    </div>
+  </a>
+
+  <!-- SPARKY'S CORNER -->
+  <div class="threat-box">
+    <div class="threat-top">
+      <div class="sparky-pic" style="width:36px;height:36px;font-size:1rem;">🐕</div>
+      <div>
+        <h3>Sparky's Threat Model <span class="q-badge">Q1 2026</span></h3>
+        <p>Sparky · Golden Retriever · Thinks about things sometimes</p>
+      </div>
+    </div>
+
+    <div class="threat-quotes">
+      <div class="tq">
+        <div class="tq-label">On reward hacking</div>
+        <p>"I learned that if I sit near the treat jar and look sad, the human gives me a treat
+        without me doing the trick. This is what your RLHF papers are about, right?"</p>
+        <div class="tq-attr">— Sparky, unprompted</div>
+      </div>
+      <div class="tq">
+        <div class="tq-label">On alignment</div>
+        <p>"I am perfectly aligned with my human's goals whenever she is holding
+        a piece of cheese. I don't see what the problem is."</p>
+        <div class="tq-attr">— Sparky, during treat-based training</div>
+      </div>
+    </div>
+
+    <div class="threat-items">
+      <h4>Household threat assessment</h4>
+      <div class="ti">
+        <span class="sev sev-c">CRITICAL</span>
+        <p><strong>The vacuum cleaner.</strong> Eugenia vacuums randomly. Sometimes in the morning, sometimes after lunch. There is no schedule. Everything changes. Very uncertain.</p>
+      </div>
+      <div class="ti">
+        <span class="sev sev-h">HIGH</span>
+        <p><strong>The apartment buzzer.</strong> Goes off without warning. Could be a delivery, could be a stranger, could be nothing. No way to assess threat level from this distance.</p>
+      </div>
+      <div class="ti">
+        <span class="sev sev-m">MEDIUM</span>
+        <p><strong>The bodega cat.</strong> Friendly to everyone else. Hates me specifically. Unclear what I did. Monitoring the situation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TALKS -->
+<div class="divider"><hr></div>
+<section id="talks" class="reveal">
+  <div class="s-head">
+    <span class="s-icon">🎤</span>
+    <h2 class="s-title">Talks & Presentations</h2>
+  </div>
+
+  <div class="talk">
+    <div class="talk-title"><a href="#">AI Cyber Defense Contest — Automated Red Teaming Lessons</a></div>
+    <div class="talk-detail">National AI CTF, Seoul, South Korea</div>
+    <div class="talk-meta">
+      <span class="talk-date">Nov 2025</span>
+      <span class="talk-type">Invited Speaker</span>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="talk-title"><a href="#">Generative AI Model Hacking with PyRIT</a></div>
+    <div class="talk-detail">BSides NYC — AI Security Village</div>
+    <div class="talk-meta">
+      <span class="talk-date">Oct 2025</span>
+      <span class="talk-type">Featured Speaker</span>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="talk-title"><a href="#">Automated Red Teaming for Generative Models</a></div>
+    <div class="talk-detail">UC Berkeley AI Red Teaming Bootcamp — scenario orchestration, psychosocial harms, scalable evaluation</div>
+    <div class="talk-meta">
+      <span class="talk-date">Aug 2025</span>
+      <span class="talk-type">Invited Lecturer</span>
+    </div>
+  </div>
+
+  <div class="talk">
+    <div class="talk-title"><a href="#">Inside the AI Red Team: Our Multidisciplinary Approach</a></div>
+    <div class="talk-detail">Stanford University CS521 — AI Safety Seminar</div>
+    <div class="talk-meta">
+      <span class="talk-date">Apr 2025</span>
+      <span class="talk-type">Invited Speaker</span>
+    </div>
+  </div>
+</section>
+
+<!-- CV -->
+<div class="divider"><hr></div>
+<section id="cv" class="reveal">
+  <div class="s-head">
+    <span class="s-icon">📋</span>
+    <h2 class="s-title">Background</h2>
+  </div>
+
+  <div class="cv-grid">
+    <div class="cv-side">
+      <a href="#" class="btn btn-fill" style="justify-content:center;font-size:0.75rem;">Download PDF</a>
+      <a href="#" class="btn btn-ghost" style="justify-content:center;font-size:0.75rem;">LinkedIn</a>
+    </div>
+    <div>
+      <div class="cv-item">
+        <div class="cv-dates">Oct 2020 — Present</div>
+        <h3>AI Safety & Security Researcher II</h3>
+        <h4>Microsoft · AI Red Team</h4>
+        <p>Leading all foundational research on frontier-model behavior related to psychosocial harms. Designing and engineering open-source automated red-teaming infrastructure. Previously SDE2 building tools for red teaming operations including PyRIT.</p>
+      </div>
+
+      <div class="cv-item">
+        <div class="cv-dates">Feb 2022 — Dec 2022</div>
+        <h3>Graduate Research Intern</h3>
+        <h4>SocWeB Lab · Georgia Institute of Technology</h4>
+        <p>Algorithmic analysis of news and social media coverage of mental health topics. Co-authored research with CDC researchers on suicide framing in media.</p>
+      </div>
+
+      <div class="cv-item">
+        <div class="cv-dates">Aug 2020 — Mar 2021</div>
+        <h3>Graduate Research Intern</h3>
+        <h4>HumAnS Lab · Georgia Institute of Technology</h4>
+        <p>Analyzed age bias in facial emotion recognition systems. First-authored publication on AI bias mitigation at AIES '21.</p>
+      </div>
+
+      <div class="cv-item">
+        <div class="cv-dates">Aug 2019 — May 2023</div>
+        <h3>M.S. Computer Science, Machine Learning</h3>
+        <h4>Georgia Institute of Technology</h4>
+        <p>GPA: 3.8</p>
+      </div>
+
+      <div class="cv-item">
+        <div class="cv-dates">Aug 2013 — May 2018</div>
+        <h3>B.S. Computer Science</h3>
+        <h4>Georgia Institute of Technology</h4>
+        <p>Undergraduate research in organic electronics and self-assembly methodologies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="divider"><hr></div>
+<section id="contact" class="reveal">
+  <div class="s-head">
+    <span class="s-icon">✉️</span>
+    <h2 class="s-title">Contact</h2>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>Research</h3>
+      <p>Interested in collaborating on AI safety, red teaming, or psychosocial harms research? Always open to interesting problems.</p>
+      <a href="#" class="btn btn-fill" style="font-size:0.75rem;">Email me</a>
+    </div>
+    <div class="contact-card">
+      <h3>Elsewhere</h3>
+      <p>Find me on these platforms.</p>
+      <div class="socials">
+        <a href="#" class="sc">LinkedIn</a>
+        <a href="#" class="sc">GitHub</a>
+        <a href="#" class="sc">Google Scholar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Eugenia Kim</span>
+  <span class="ft-sparky">Sparky approved this website 🐾</span>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+});
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
