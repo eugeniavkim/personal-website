@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="POST DESCRIPTION HERE — Eugenia Kim">
+<meta name="author" content="Eugenia Kim">
+<meta property="og:title" content="POST TITLE HERE — Eugenia Kim">
+<meta property="og:description" content="POST DESCRIPTION HERE">
+<meta property="og:type" content="article">
+<title>POST TITLE HERE — Eugenia Kim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --text: #37352f;
+  --text-secondary: #787774;
+  --text-light: #9b9a97;
+  --bg: #ffffff;
+  --bg-hover: #f7f6f3;
+  --border: #e9e9e7;
+  --border-light: #f1f1ef;
+  --gold: #c4820e;
+  --gold-bg: #fdecc8;
+  --gold-text: #93590d;
+  --red-bg: #ffe2dd;
+  --red-text: #93291a;
+  --green-bg: #dbeddb;
+  --green-text: #2b593f;
+  --blue-bg: #d3e5ef;
+  --blue-text: #28456c;
+  --purple-bg: #e8deee;
+  --purple-text: #6940a5;
+  --gray-bg: #eee;
+  --gray-text: #5a5a58;
+  --max-w: 680px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(55, 53, 47, 0.08); }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+nav.scrolled { border-bottom-color: var(--border); }
+
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: all 0.12s;
+}
+
+.nav-links a:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+}
+
+.mobile-toggle:hover { background: var(--bg-hover); }
+
+.mobile-toggle span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--text);
+  margin: 3.5px 0;
+}
+
+/* ── POST ── */
+.post {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 7rem 1.5rem 4rem;
+}
+
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8125rem;
+  color: var(--text-light);
+  text-decoration: none;
+  margin-bottom: 2.5rem;
+  transition: color 0.12s;
+}
+
+.post-back:hover { color: var(--text); }
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  color: var(--text-light);
+}
+
+.post-tag {
+  font-size: 0.625rem;
+  font-weight: 500;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+/* TAG COLORS — use the one that matches your post
+.t-human { background: var(--green-bg); color: var(--green-text); }       Staying Human
+.t-life { background: var(--purple-bg); color: var(--purple-text); }      Real Life
+.t-bridges { background: var(--blue-bg); color: var(--blue-text); }       Interdisciplinary Bridges
+.t-open { background: var(--gray-bg); color: var(--gray-text); }          Open Questions
+.t-work { background: var(--blue-bg); color: var(--blue-text); }          Sparky Nap Time
+.t-bysparky { background: var(--gold-bg); color: var(--gold-text); }      By Sparky
+*/
+.t-human { background: var(--green-bg); color: var(--green-text); }
+.t-life { background: var(--purple-bg); color: var(--purple-text); }
+.t-bridges { background: var(--blue-bg); color: var(--blue-text); }
+.t-open { background: var(--gray-bg); color: var(--gray-text); }
+.t-work { background: var(--blue-bg); color: var(--blue-text); }
+.t-bysparky { background: var(--gold-bg); color: var(--gold-text); }
+
+.post-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.75rem;
+}
+
+/* SPARKY TLDR */
+.sparky-tldr {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+  padding: 1.125rem;
+  background: #fef9ee;
+  border-radius: 8px;
+  margin-bottom: 2.5rem;
+}
+
+.sparky-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gold-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.sparky-tldr-text {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* POST BODY */
+.post-body h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.post-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.post-body p {
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+
+.post-body a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s;
+}
+
+.post-body a:hover { text-decoration-color: var(--text); }
+
+.post-body blockquote {
+  border-left: 2px solid var(--border);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.post-body ul, .post-body ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.post-body li {
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  margin-bottom: 0.35rem;
+}
+
+.post-body code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8125rem;
+  background: var(--bg-hover);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+}
+
+.post-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.post-body hr {
+  border: none;
+  height: 1px;
+  background: var(--border-light);
+  margin: 2.5rem 0;
+}
+
+/* POST FOOTER */
+.post-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-footer a {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.post-footer a:hover { color: var(--text); }
+
+/* ── FOOTER ── */
+footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.6875rem;
+  color: var(--text-light);
+}
+
+.ft-sparky { color: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .nav-inner { padding: 0.625rem 1rem; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: var(--bg);
+    flex-direction: column;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .nav-links.open { display: flex; }
+  .mobile-toggle { display: block; }
+
+  .post { padding: 6rem 1rem 3rem; }
+  .post-title { font-size: 1.375rem; }
+
+  footer {
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+}
+</style>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-name">Eugenia Kim</a>
+    <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/#publications">Research</a></li>
+      <li><a href="/#field-notes">Unfinished Thoughts</a></li>
+      <li><a href="/#talks">Talks</a></li>
+      <li><a href="/#cv">CV</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="post">
+
+  <a href="/" class="post-back">← Back to home</a>
+
+  <div class="post-meta">
+    <span class="post-date">Apr 2026</span>
+    <!-- CHANGE THIS TAG to match your post category -->
+    <span class="post-tag t-human">Staying Human</span>
+  </div>
+
+  <h1 class="post-title">Everyone Talks Like ChatGPT Now</h1>
+
+  <!-- SPARKY'S TLDR -->
+  <div class="sparky-tldr">
+    <div class="sparky-pic">🐕</div>
+    <div class="sparky-tldr-text">
+      "SPARKY TLDR HERE"
+    </div>
+  </div>
+
+  <!-- YOUR POST GOES HERE -->
+  <div class="post-body">
+
+    <p>
+      Write your post here. Just use normal HTML — paragraphs in &lt;p&gt; tags,
+      headings with &lt;h2&gt; and &lt;h3&gt;, links with &lt;a&gt;, and
+      blockquotes with &lt;blockquote&gt;.
+    </p>
+
+    <p>
+      This is what a second paragraph looks like. The font size, line height, and
+      spacing are all set — just write.
+    </p>
+
+    <h2>You can use headings like this</h2>
+
+    <p>
+      And keep writing underneath them. If you want a visual break between
+      sections, use an &lt;hr&gt; tag:
+    </p>
+
+    <hr>
+
+    <p>
+      That's it. Delete everything in this post-body div and replace it with
+      your actual writing.
+    </p>
+
+  </div>
+
+  <div class="post-footer">
+    <a href="/">← Back to home</a>
+    <!-- Optional: link to next/previous post -->
+    <!-- <a href="/posts/next-post.html">Next post →</a> -->
+  </div>
+
+</article>
+
+<footer>
+  <span>© 2026 Eugenia Kim</span>
+  <span class="ft-sparky">Sparky approved this website 🐾</span>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+});
+</script>
+
+</body>
+</html>
