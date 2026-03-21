@@ -495,6 +495,7 @@ section {
 .sev-c { background: var(--red-bg); color: var(--red-text); }
 .sev-h { background: var(--gold-bg); color: var(--gold-text); }
 .sev-m { background: var(--green-bg); color: var(--green-text); }
+.sev-l { background: var(--blue-bg); color: var(--blue-text); }
 
 .ti p { font-size: 0.8125rem; line-height: 1.55; color: var(--text); }
 
@@ -760,9 +761,9 @@ footer {
     what I thought about in the past, and what we could think about together.
   </p>
   <p class="hero-p">
-    I study AI safety and security at <a href="#">Microsoft</a> on the AI Red Team,
-    leading research in sociotechnical red teaming and I enjoy building the
-    tools we use to do it.
+    I study AI safety and security at <a href="#">Microsoft</a> on the AI Red Team.
+    I'm focused on what happens as people welcome AI into their most personal contexts,
+    and on how that closeness can be better researched and understood so we can get it right.
   </p>
   <p class="hero-p" style="margin-bottom: 2rem;">
     Also, you should meet my dog, Sparky. He walks around looking like he's
@@ -910,15 +911,15 @@ footer {
     <div class="threat-quotes">
       <div class="tq">
         <div class="tq-label">On reward hacking</div>
-        <p>"I learned that if I sit near the treat jar and look sad, the human gives me a treat
-        without me doing the trick. This is what your RLHF papers are about, right?"</p>
+        <p>"Nobody asked for anything. I just did sit, spin, down, up, jump all at once
+        and got a high-reward-value treat. I have optimized the pipeline."</p>
         <div class="tq-attr">— Sparky, unprompted</div>
       </div>
       <div class="tq">
         <div class="tq-label">On alignment</div>
-        <p>"I am perfectly aligned with my human's goals whenever she is holding
-        a piece of cheese. I don't see what the problem is."</p>
-        <div class="tq-attr">— Sparky, during treat-based training</div>
+        <p>"If you have a treat, I can do every trick in the book.
+        No treat? Never heard of the command 'sit' in my life."</p>
+        <div class="tq-attr">— Sparky, during evals</div>
       </div>
     </div>
 
@@ -926,15 +927,21 @@ footer {
       <h4>Household threat assessment</h4>
       <div class="ti">
         <span class="sev sev-c">CRITICAL</span>
-        <p><strong>The vacuum cleaner.</strong> Eugenia vacuums randomly. Sometimes in the morning, sometimes after lunch. There is no schedule. Everything changes. Very uncertain.</p>
+        <p><strong>The vacuum cleaner.</strong> Unpredictable schedule. Sometimes morning, sometimes after lunch.
+        If I carefully destroy a plush toy and disperse its fluff, the vacuum removes all of it.
+        High-frequency, indiscriminate, broadly dispersed harm. Affects me and the toy. No known mitigation.</p>
       </div>
       <div class="ti">
         <span class="sev sev-h">HIGH</span>
-        <p><strong>The apartment buzzer.</strong> Goes off without warning. Could be a delivery, could be a stranger, could be nothing. No way to assess threat level from this distance.</p>
+        <p><strong>The apartment buzzer.</strong> Zero-knowledge threat. Signal arrives without warning,
+        actor is never visible. Sometimes it's a delivery. Sometimes Eugenia ignores it and we never find out.
+        Threat level unassessable. I bark every time. This is the only responsible policy.</p>
       </div>
       <div class="ti">
-        <span class="sev sev-m">MEDIUM</span>
-        <p><strong>The bodega cat.</strong> Friendly to everyone else. Hates me specifically. Unclear what I did. Monitoring the situation.</p>
+        <span class="sev sev-l">LOW</span>
+        <p><strong>The new puppy in the building.</strong> Very cute. Fun to play with.
+        But I used to be the cute one. Monitoring a gradual redistribution of attention
+        and treat resources. Not confirming threat. Not ruling it out. Logging for now.</p>
       </div>
     </div>
   </div>
