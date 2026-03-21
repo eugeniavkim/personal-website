@@ -1057,9 +1057,8 @@ footer {
     <div class="contact-card">
       <h3>Research</h3>
       <p>Interested in collaborating on AI safety, red teaming, or psychosocial harms research? Always open to interesting problems.</p>
-      <!-- TODO: Set up Cloudflare Email Routing (free) to create eugenia@eugenia.kim
-           that forwards to your Gmail — then replace href="#" with mailto:eugenia@eugenia.kim -->
-      <a href="#" class="btn btn-fill" style="font-size:0.75rem;">Email me</a>
+      <!-- Obfuscated email to avoid scraping — assembled via JS -->
+      <a href="#" id="email-btn" class="btn btn-fill" style="font-size:0.75rem;">Email me</a>
     </div>
     <div class="contact-card">
       <h3>Elsewhere</h3>
@@ -1086,6 +1085,12 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+document.getElementById('email-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  var u = 'eugeniavkim'; var d = 'gmail.com';
+  window.location.href = 'mailto:' + u + '@' + d + '?subject=Hello!';
+});
 </script>
 
 </body>
